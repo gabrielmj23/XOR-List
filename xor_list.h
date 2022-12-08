@@ -5,7 +5,7 @@ typedef struct node {
 	int valor;
 	struct node *seq_ptr;
 }
-node_t;
+nodo_t;
 
 typedef struct {
 	Node *ini, *fin;	
@@ -15,13 +15,13 @@ lista_t;
 /*
  * Macros para navegar la lista
  */
-#define NEXT(cur,prev) (cur->seq_ptr ^ prev)
-#define PREV(cur,next) (cur->seq_ptr ^ next)
+#define NEXT(cur,prev) (nodo_t *)(cur->seq_ptr ^ prev)
+#define PREV(cur,next) (nodo_t *)(cur->seq_ptr ^ next)
 
 /*
  * Funciones de utilidad
  */
-node_t *nuevo_nodo(double elem);
+nodo_t *nuevo_nodo(double elem);
 lista_t *nueva_lista(void);
 void elimina_lista(lista_t *listp);
 
@@ -33,8 +33,8 @@ void inserta_ilista(lista_t *listp, int elem);
 void inserta_flista(lista_t *listp, int elem);
 void inserta_lista(lista_t *listp, int elem);
 // Sacar el primero, ultimo y primera ocurrencia
-void sacarp_lista(lista_t *listp, int *elem);
-void sacarf_lista(lista_t *listp, int *elem);
+int sacarp_lista(lista_t *listp, int *elem);
+int sacarf_lista(lista_t *listp, int *elem);
 int sacar_lista(lista_t *listp, int elem);
 // Funciones variadas
 int buscar_lista(lista_t *listp, int elem);
