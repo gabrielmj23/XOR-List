@@ -1,14 +1,14 @@
 /*
  * Tipos de datos
  */
-typedef struct node {
+typedef struct nodo {
 	int valor;
-	struct node *seq_ptr;
+	struct nodo *seq_ptr;
 }
 nodo_t;
 
 typedef struct {
-	Node *ini, *fin;	
+	nodo_t *ini, *fin;	
 }
 lista_t;
 
@@ -21,7 +21,7 @@ lista_t;
 /*
  * Funciones de utilidad
  */
-nodo_t *nuevo_nodo(double elem);
+nodo_t *nuevo_nodo(int elem);
 lista_t *nueva_lista(void);
 void elimina_lista(lista_t *listp);
 

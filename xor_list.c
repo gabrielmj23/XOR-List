@@ -3,6 +3,29 @@
 #include "xor_list.h"
 
 
+// Crea un nodo de lista
+nodo_t *nuevo_nodo(int elem) {
+	nodo_t *newp = (nodo_t *)malloc(sizeof(nodo_t));
+	if (!newp) {
+		fprintf(stderr, "Error reservando memoria\n");
+		return NULL;
+	}
+	newp->seq_ptr = NULL;
+	newp->valor = elem;
+	return newp;
+}
+
+// Crea un apuntador de lista
+lista_t *nueva_lista(void) {
+	lista_t *newp = (lista_t *)malloc(sizeof(lista_t));
+	if (!newp) {
+		fprintf(stderr, "Error reservando memoria\n");
+		return NULL;
+	}
+	newp->ini = newp->fin = NULL;
+	return newp;
+}
+
 // Verifica si la lista esta vacia
 int lista_vacia(lista_t *listp) {
 	return !listp || !listp->ini;
