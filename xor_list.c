@@ -3,9 +3,14 @@
 #include "xor_list.h"
 
 
+// Verifica si la lista esta vacia
+int lista_vacia(lista_t *listp) {
+	return !listp || !listp->ini;
+}
+
 // Elimina el primer elemento de la lista y almacena su valor en elem
 int sacarp_lista(lista_t *listp, int *elem) {
-	if (!listp || !listp->ini)
+	if (lista_vacia(listp))
 		return 0;
 
 	// Modificar puntero de secuencia del siguiente nodo si existe
@@ -25,7 +30,7 @@ int sacarp_lista(lista_t *listp, int *elem) {
 
 // Elimina el ultimo elemento de la lista y almacena su valor en elem
 int sacarf_lista(lista_t *listp, int *elem) {
-	if (!listp || !listp->ini)
+	if (lista_vacia(listp))
 		return 0;
 
 	// Modificar puntero de secuencia del penultimo nodo si existe
@@ -45,7 +50,7 @@ int sacarf_lista(lista_t *listp, int *elem) {
 
 // Elimina la primera ocurrencia de un valor
 int sacar_lista(lista_t *listp, int elem) {
-	if (!listp || !listp->ini)
+	if (lista_vacia(listp))
 		return 0;
 
 	nodo_t *np = listp->ini, *prev = NULL, *aux;
