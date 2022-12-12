@@ -27,19 +27,19 @@ lista_t *nueva_lista(void) {
 }
 
 // Verifica si la lista esta vacia
-int lista_vacia(lista_t *listp) {
+int es_vacia(lista_t *listp) {
 	return !listp || !listp->ini;
 }
 
 // Elimina el primer elemento de la lista y almacena su valor en elem
-int sacarp_lista(lista_t *listp, int *elem) {
-	if (lista_vacia(listp))
+int sacar_principio(lista_t *listp, int *elem) {
+	if (es_vacia(listp))
 		return 0;
 
 	// Modificar puntero de secuencia del siguiente nodo si existe
-	nodo_t *np = listp->ini, *sig;
-	if (sig = NEXT(np, NULL))
-		sig->seq_ptr ^= listp->ini;  // Apuntará solo al siguiente elemento, p^p^q = q
+	nodo_t *np = listp->ini, *sig = NEXT(np, NULL);
+	if (sig)
+		sig->seq_ptr = (nodo_t *)((int)sig->seq_ptr ^ (int)listp->ini);
 	// Guardar valor del nodo
 	*elem = np->valor;
 	// Ajustar apuntadores de la lista
@@ -52,14 +52,14 @@ int sacarp_lista(lista_t *listp, int *elem) {
 }
 
 // Elimina el ultimo elemento de la lista y almacena su valor en elem
-int sacarf_lista(lista_t *listp, int *elem) {
-	if (lista_vacia(listp))
+int sacar_final(lista_t *listp, int *elem) {
+	if (es_vacia(listp))
 		return 0;
 
 	// Modificar puntero de secuencia del penultimo nodo si existe
-	nodo_t *np = listp->fin, *ant;
-	if (ant = PREV(np, NULL))
-		ant->seq_ptr ^= listp->fin;
+	nodo_t *np = listp->fin, *ant = PREV(np, NULL);
+	if (ant)
+		ant->seq_ptr = (nodo_t *)((int)ant->seq_ptr ^ (int)listp->fin);
 	// Guardar valor
 	*elem = np->valor;
 	// Ajustar apuntadores de la lista
@@ -72,23 +72,23 @@ int sacarf_lista(lista_t *listp, int *elem) {
 }
 
 // Elimina la primera ocurrencia de un valor
-int sacar_lista(lista_t *listp, int elem) {
-	if (lista_vacia(listp))
+int sacar_primera_ocurrencia(lista_t *listp, int elem) {
+	if (es_vacia(listp))
 		return 0;
 
 	nodo_t *np = listp->ini, *prev = NULL, *aux;
 	while (np) {
 		if (np->valor == elem) {
 			// Se encontro el nodo
-			nodo_t *sig;
+			nodo_t *sig = NEXT(np, prev);
 			// Modificar apuntador del siguiente si existe. Si no, modificar fin de lista
-			if (sig = NEXT(np, prev))
-				sig->seq_ptr = (nodo_t *)(prev ^ NEXT(sig, np));
+			if (sig)
+				sig->seq_ptr = (nodo_t *)((int)prev ^ (int)NEXT(sig, np));
 			else
 				listp->fin = prev;
 			// Modificar apuntador del anterior si existe. Si no, modificar inicio de lista
 			if (prev)
-				prev->seq_ptr = (nodo_t *)(PREV(prev, np) ^ sig);
+				prev->seq_ptr = (nodo_t *)((int)PREV(prev, np) ^ (int)sig);
 			else
 				listp->ini = sig;
 			// Liberar
@@ -104,8 +104,8 @@ int sacar_lista(lista_t *listp, int elem) {
 }
 
 // Devuelve la posicion de un elemento en la lista
-int buscar_lista(lista_t *listp, int elem) {
-	if (lista_vacia(listp))
+int buscar_elemento(lista_t *listp, int elem) {
+	if (es_vacia(listp))
 		return 0;
 
 	nodo_t *np = listp->ini, *prev = NULL, *aux;
