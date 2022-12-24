@@ -103,17 +103,16 @@ int sacar_primera_ocurrencia(lista_t *listp, int elem) {
 	return 0;
 }
 
-// Devuelve la posicion de un elemento en la lista
+// Determina si el elemento esta en la lista
 int buscar_elemento(lista_t *listp, int elem) {
 	if (es_vacia(listp))
 		return 0;
 
 	nodo_t *np = listp->ini, *prev = NULL, *aux;
-	int pos = 1;
 	while (np) {
 		// Si hay coincidencia se devuelve la posicion
 		if (np->valor == elem)
-			return pos;
+			return 1;
 		// Si no, se avanza
 		aux = np;
 		np = NEXT(np, prev);
