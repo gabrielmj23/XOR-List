@@ -39,11 +39,11 @@ int sacar_principio(lista_t *listp, int *elem) {
 	// Modificar puntero de secuencia del siguiente nodo si existe
 	nodo_t *np = listp->ini, *sig = NEXT(np, NULL);
 	if (sig)
-		sig->seq_ptr = (nodo_t *)((int)sig->seq_ptr ^ (int)listp->ini);
+		sig->seq_ptr = NODE_XOR(sig->seq_ptr, listp->ini);
 	// Guardar valor del nodo
 	*elem = np->valor;
 	// Ajustar apuntadores de la lista
-	listp->ini = sig
+	listp->ini = sig;
 	if (listp->fin == np)
 		listp->fin = NULL;
 	// Liberar memoria
@@ -59,7 +59,7 @@ int sacar_final(lista_t *listp, int *elem) {
 	// Modificar puntero de secuencia del penultimo nodo si existe
 	nodo_t *np = listp->fin, *ant = PREV(np, NULL);
 	if (ant)
-		ant->seq_ptr = (nodo_t *)((int)ant->seq_ptr ^ (int)listp->fin);
+		ant->seq_ptr = NODE_XOR(ant->seq_ptr, listp->fin);
 	// Guardar valor
 	*elem = np->valor;
 	// Ajustar apuntadores de la lista
@@ -83,12 +83,12 @@ int sacar_primera_ocurrencia(lista_t *listp, int elem) {
 			nodo_t *sig = NEXT(np, prev);
 			// Modificar apuntador del siguiente si existe. Si no, modificar fin de lista
 			if (sig)
-				sig->seq_ptr = (nodo_t *)((int)prev ^ (int)NEXT(sig, np));
+				sig->seq_ptr = NODE_XOR(prev, NEXT(sig, np));
 			else
 				listp->fin = prev;
 			// Modificar apuntador del anterior si existe. Si no, modificar inicio de lista
 			if (prev)
-				prev->seq_ptr = (nodo_t *)((int)PREV(prev, np) ^ (int)sig);
+				prev->seq_ptr = NODE_XOR(PREV(prev, np), sig);
 			else
 				listp->ini = sig;
 			// Liberar
@@ -117,7 +117,6 @@ int buscar_elemento(lista_t *listp, int elem) {
 		aux = np;
 		np = NEXT(np, prev);
 		prev = aux;
-		++pos;
 	}
 	return 0;
 }

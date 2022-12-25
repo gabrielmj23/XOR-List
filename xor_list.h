@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 /*
  * Tipos de datos
  */
@@ -15,8 +17,10 @@ lista_t;
 /*
  * Macros para navegar la lista
  */
-#define NEXT(cur,prev) (nodo_t *)((int)cur->seq_ptr ^ (int)prev)
-#define PREV(cur,next) (nodo_t *)((int)cur->seq_ptr ^ (int)next)
+#define NODE_XOR(ptr1, ptr2) (nodo_t *)((uintptr_t)ptr1 ^ (uintptr_t)ptr2)
+#define NEXT(cur,prev) NODE_XOR(cur->seq_ptr, prev)
+#define PREV(cur,next) NODE_XOR(cur->seq_ptr, next)
+
 
 /*
  * Funciones de utilidad
