@@ -26,6 +26,19 @@ lista_t *nueva_lista(void) {
 	return newp;
 }
 
+void inicializar_lista(lista_t *listp){
+    nodo_t *nodop = listp->ini;
+    nodo_t *prev = NULL, *temp;
+    while (nodop != NULL){
+        temp = nodop;
+        nodop = NEXT(nodop, prev);
+        prev = temp;
+        free(temp);
+    }
+    listp->ini = NULL;
+    listp->fin = NULL;
+}
+
 // Verifica si la lista esta vacia
 int es_vacia(lista_t *listp) {
 	return !listp || !listp->ini;
