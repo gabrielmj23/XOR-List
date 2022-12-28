@@ -31,6 +31,71 @@ int es_vacia(lista_t *listp) {
 	return !listp || !listp->ini;
 }
 
+//Para insertar al inicio
+int insertar_principio(lista_t *listp, int elem) {
+    nodo_t *nuevo = malloc(sizeof(nodo_t));
+    if (nuevo == NULL) {
+        return 0; // error al asignar memoria
+    }
+    nuevo->valor = elem;
+    nuevo->seq_ptr = listp->ini;
+    listp->ini = nuevo;
+    if (listp->fin == NULL) {
+        listp->fin = nuevo;
+    }
+    return 1; // inserción exitosa
+}
+
+//Para insertar al final de la lista
+int insertar_final(lista_t *listp, int elem) {
+    nodo_t *nuevo = malloc(sizeof(nodo_t));
+    if (nuevo == NULL) {
+        return 0; // error al asignar memoria
+    }
+    nuevo->valor = elem;
+    nuevo->seq_ptr = NULL;
+    if (listp->fin == NULL) {
+        listp->ini = nuevo;
+    } else {
+        listp->fin->seq_ptr = nuevo;
+    }
+    listp->fin = nuevo;
+    return 1; // inserción exitosa
+}
+
+// Para insertar en orden
+int insertar_orden(lista_t *listp, int elem) {
+    nodo_t *nuevo = malloc(sizeof(nodo_t));
+    if (nuevo == NULL) {
+        return 0; // error al asignar memoria
+    }
+    nuevo->valor = elem;
+    nodo_t *actual = listp->ini;
+    nodo_t *anterior = NULL;
+    while (actual != NULL && actual->valor < elem) {
+        anterior = actual;
+        actual = actual->seq_ptr;
+    }
+    if (anterior == NULL) {
+        // insertar al inicio
+        nuevo->seq_ptr = listp->ini;
+        listp->ini = nuevo;
+        if (listp->fin == NULL) {
+            listp->fin = nuevo;
+        }
+    } else if (actual == NULL) {
+        // insertar al final
+        anterior->seq_ptr = nuevo;
+        nuevo->seq_ptr = NULL;
+        listp->fin = nuevo;
+    } else {
+        // insertar en medio
+        nuevo->seq_ptr = actual;
+        anterior->seq_ptr = nuevo;
+    }
+    return 1; // inserción exitosa
+}
+
 // Elimina el primer elemento de la lista y almacena su valor en elem
 int sacar_principio(lista_t *listp, int *elem) {
 	if (es_vacia(listp))
