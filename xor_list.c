@@ -185,3 +185,21 @@ int buscar_elemento(lista_t *listp, int elem) {
 	}
 	return 0;
 }
+
+int cantidad_elementos(lista_t *listp) {
+  int contador = 0;
+
+  // Verificamos si la lista está vacía
+  if (listp->ini == NULL) {
+    return 0;
+  }
+
+  // Recorremos la lista y aumentamos el contador por cada nodo
+  nodo_t *nodop = listp->ini;
+  while (nodop != NULL) {
+    contador++;
+    nodop = nodop->seq_ptr;
+  }
+
+  return contador;
+}
