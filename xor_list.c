@@ -58,13 +58,20 @@ int es_vacia(lista_t *listp) {
  */
 int insertar_principio(lista_t *listp, int elem) {
   nodo_t *nuevo = nuevo_nodo(elem);
-  if (nuevo == NULL)
-  	return 0;
-  nuevo->seq_ptr = listp->ini;
-  listp->ini = nuevo;
-  if (listp->fin == NULL)
-    listp->fin = nuevo;
-  return 1; // inserción exitosa
+  // Insertar el nuevo nodo al principio de la lista
+	if (listp->ini == NULL) {
+		// La lista está vacía, el nuevo nodo es el único en la lista
+		listp->ini = nuevo_nodo;
+		listp->fin = nuevo_nodo;
+		nuevo_nodo->seq_ptr = NULL;
+	} else {
+		// La lista no está vacía, el nuevo nodo es el primero en la lista
+		nuevo_nodo->seq_ptr = listp->ini;
+		listp->ini->seq_ptr = NODE_XOR(nuevo_nodo, listp->ini->seq_ptr);
+		listp->ini = nuevo_nodo;
+	}
+
+	return 1; // Inserción exitosa
 }
 
 /*
