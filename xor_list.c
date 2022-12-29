@@ -58,6 +58,8 @@ int es_vacia(lista_t *listp) {
  */
 int insertar_principio(lista_t *listp, int elem) {
   nodo_t *nuevo = nuevo_nodo(elem);
+  if (nuevo == NULL)
+    return 0;
   // Insertar el nuevo nodo al principio de la lista
 	if (listp->ini == NULL) {
 		// La lista está vacía, el nuevo nodo es el único en la lista
