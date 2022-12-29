@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "xor_list.h"
 #define CANT_OPC 12
 
@@ -7,6 +8,7 @@ int pedir_valor(char *mensaje) {
 	printf("%s", mensaje);
 	int v;
 	scanf("%i", &v);
+	fflush(stdin);
 	return v;
 }
 
@@ -16,6 +18,7 @@ void insertar(int (*func)(lista_t *, int), lista_t *listp, int dato) {
 	else
 		printf("Ocurrio un error\n");
 	getchar();
+	getchar();
 }
 
 void sacar(int (*func)(lista_t *, int *), lista_t *listp) {
@@ -24,6 +27,7 @@ void sacar(int (*func)(lista_t *, int *), lista_t *listp) {
 		printf("Se saco el elemento con valor %i\n", devuelto);
 	else
 		printf("Error: La lista esta vacia\n");
+	getchar();
 	getchar();
 }
 
@@ -60,6 +64,7 @@ int main() {
 			inicializar_lista(lista);
 			printf("Inicializada\n");
 			getchar();
+			getchar();
 			break;
 
 		case 2:
@@ -67,6 +72,7 @@ int main() {
 				printf("La lista esta vacia\n");
 			else
 				printf("La lista no esta vacia\n");
+			getchar();
 			getchar();
 			break;
 
@@ -92,6 +98,7 @@ int main() {
 			else
 				printf("%i no esta en la lista\n", dato);
 			getchar();
+			getchar();
 			break;
 
 		case 7:
@@ -109,20 +116,24 @@ int main() {
 			else
 				printf("No se encontro %i\n", dato);
 			getchar();
+			getchar();
 			break;
 
 		case 10:
 			listar_inicio_final(lista);
+			getchar();
 			getchar();
 			break;
 
 		case 11:
 			listar_final_inicio(lista);
 			getchar();
+			getchar();
 			break;
 
 		case 12:
 			printf("La lista tiene %i elementos\n", cantidad_elementos(lista));
+			getchar();
 			getchar();
 			break;
 		}

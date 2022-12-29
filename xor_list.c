@@ -3,7 +3,9 @@
 #include "xor_list.h"
 
 
-// Crea un nodo de lista
+/*
+ * Crea un nodo de lista
+ */
 nodo_t *nuevo_nodo(int elem) {
 	nodo_t *newp = (nodo_t *)malloc(sizeof(nodo_t));
 	if (!newp) {
@@ -15,7 +17,9 @@ nodo_t *nuevo_nodo(int elem) {
 	return newp;
 }
 
-// Crea un apuntador de lista
+/*
+ * Crea un apuntador de lista
+ */
 lista_t *nueva_lista(void) {
 	lista_t *newp = (lista_t *)malloc(sizeof(lista_t));
 	if (!newp) {
@@ -26,46 +30,50 @@ lista_t *nueva_lista(void) {
 	return newp;
 }
 
+/*
+ * Inicializa (vacia) una lista
+ */
 void inicializar_lista(lista_t *listp){
-    nodo_t *nodop = listp->ini;
-    nodo_t *prev = NULL, *temp;
-    while (nodop != NULL){
-        temp = nodop;
-        nodop = NEXT(nodop, prev);
-        prev = temp;
-        free(temp);
-    }
-    listp->ini = NULL;
-    listp->fin = NULL;
+  nodo_t *nodop = listp->ini;
+  nodo_t *prev = NULL, *temp;
+  while (nodop != NULL){
+    temp = nodop;
+    nodop = NEXT(nodop, prev);
+    prev = temp;
+    free(temp);
+  }
+  listp->ini = NULL;
+  listp->fin = NULL;
 }
 
-// Verifica si la lista esta vacia
+/*
+ * Verifica si la lista esta vacia
+ */
 int es_vacia(lista_t *listp) {
 	return !listp || !listp->ini;
 }
 
-//Para insertar al inicio
+/* 
+ * Inserta un nodo con valor elem al inicio
+ */
 int insertar_principio(lista_t *listp, int elem) {
-    nodo_t *nuevo = malloc(sizeof(nodo_t));
-    if (nuevo == NULL) {
-        return 0; // error al asignar memoria
-    }
-    nuevo->valor = elem;
-    nuevo->seq_ptr = listp->ini;
-    listp->ini = nuevo;
-    if (listp->fin == NULL) {
-        listp->fin = nuevo;
-    }
-    return 1; // inserción exitosa
+  nodo_t *nuevo = nuevo_nodo(elem);
+  if (nuevo == NULL)
+  	return 0;
+  nuevo->seq_ptr = listp->ini;
+  listp->ini = nuevo;
+  if (listp->fin == NULL)
+    listp->fin = nuevo;
+  return 1; // inserción exitosa
 }
 
-//Para insertar al final de la lista
+/*
+ * Inserta un nodo con valor elem al final
+ */
 int insertar_final(lista_t *listp, int elem) {
-    nodo_t *nuevo = malloc(sizeof(nodo_t));
-    if (nuevo == NULL) {
-        return 0; // error al asignar memoria
-    }
-    nuevo->valor = elem;
+    nodo_t *nuevo = nuevo_nodo(elem);
+    if (nuevo == NULL)
+    	return 0;
     nuevo->seq_ptr = NULL;
     if (listp->fin == NULL) {
         listp->ini = nuevo;
@@ -76,13 +84,13 @@ int insertar_final(lista_t *listp, int elem) {
     return 1; // inserción exitosa
 }
 
-// Para insertar en orden
+/*
+ * Inserta ordenado un nodo con valor elem
+ */
 int insertar_orden(lista_t *listp, int elem) {
-    nodo_t *nuevo = malloc(sizeof(nodo_t));
-    if (nuevo == NULL) {
-        return 0; // error al asignar memoria
-    }
-    nuevo->valor = elem;
+    nodo_t *nuevo = nuevo_nodo(elem);
+    if (nuevo == NULL)
+    	return 0;
     nodo_t *actual = listp->ini;
     nodo_t *anterior = NULL;
     while (actual != NULL && actual->valor < elem) {
@@ -109,7 +117,9 @@ int insertar_orden(lista_t *listp, int elem) {
     return 1; // inserción exitosa
 }
 
-// Elimina el primer elemento de la lista y almacena su valor en elem
+/*
+ * Elimina el primer elemento de la lista y almacena su valor en elem
+ */
 int sacar_principio(lista_t *listp, int *elem) {
 	if (es_vacia(listp))
 		return 0;
@@ -129,7 +139,9 @@ int sacar_principio(lista_t *listp, int *elem) {
 	return 1;
 }
 
-// Elimina el ultimo elemento de la lista y almacena su valor en elem
+/*
+ * Elimina el ultimo elemento de la lista y almacena su valor en elem
+ */
 int sacar_final(lista_t *listp, int *elem) {
 	if (es_vacia(listp))
 		return 0;
@@ -149,7 +161,9 @@ int sacar_final(lista_t *listp, int *elem) {
 	return 1;
 }
 
-// Elimina la primera ocurrencia de un valor
+/*
+ * Elimina la primera ocurrencia de un valor
+ */
 int sacar_primera_ocurrencia(lista_t *listp, int elem) {
 	if (es_vacia(listp))
 		return 0;
@@ -181,7 +195,9 @@ int sacar_primera_ocurrencia(lista_t *listp, int elem) {
 	return 0;
 }
 
-// Determina si el elemento esta en la lista
+/*
+ * Determina si el elemento esta en la lista
+ */
 int buscar_elemento(lista_t *listp, int elem) {
 	if (es_vacia(listp))
 		return 0;
@@ -199,6 +215,39 @@ int buscar_elemento(lista_t *listp, int elem) {
 	return 0;
 }
 
+/*
+ * Imprime la lista de inicio a final
+ */
+void listar_inicio_final(lista_t *listp) {
+	nodo_t *nodop = listp->ini, *prev = NULL, *aux;
+	printf("--> ");
+	while (nodop) {
+		printf("%i --> ", nodop->valor);
+		aux = nodop;
+		nodop = NEXT(nodop, prev);
+		prev = aux;
+	}
+	printf("NULL\n");
+}
+
+/*
+ * Imprime la lista de final a inicio
+ */
+void listar_final_inicio(lista_t *listp) {
+	nodo_t *nodop = listp->fin, *nxt = NULL, *aux;
+	printf("NULL");
+	while (nodop) {
+		printf(" <-- %i", nodop->valor);
+		aux = nodop;
+		nodop = PREV(nodop, nxt);
+		nxt = aux;
+	}
+	printf("\n");
+}
+
+/*
+ * Devuelve longitud de la lista
+ */
 int cantidad_elementos(lista_t *listp) {
   int contador = 0;
 
