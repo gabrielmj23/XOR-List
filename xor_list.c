@@ -92,7 +92,7 @@ int insertar_final(lista_t *listp, int elem) {
 	} else {
 		// La lista no está vacía, el nuevo nodo es el último en la lista
 		nuevo_nodo->seq_ptr = listp->fin;
-		listp->fin->seq_ptr = NODE_XOR(listp->fin, nuevo_nodo);
+		listp->fin->seq_ptr = NODE_XOR(listp->fin->seq_ptr, nuevo_nodo);
 		listp->fin = nuevo_nodo;
 	}
 
