@@ -272,19 +272,19 @@ void listar_final_inicio(lista_t *listp) {
  * Devuelve longitud de la lista
  */
 int cantidad_elementos(lista_t *listp) {
-  int contador = 0;
+	// Si la lista está vacía, devolver 0
+	if (listp->ini == NULL) return 0;
 
-  // Verificamos si la lista está vacía
-  if (listp->ini == NULL) {
-    return 0;
-  }
+	// Contar la cantidad de elementos en la lista
+	int cantidad = 0;
+	nodo_t *cur = listp->ini;
+	nodo_t *prev = NULL;
+	while (cur != NULL) {
+		cantidad++;
+		nodo_t *temp = cur;
+		cur = NEXT(cur, prev);
+		prev = temp;
+	}
 
-  // Recorremos la lista y aumentamos el contador por cada nodo
-  nodo_t *nodop = listp->ini;
-  while (nodop != NULL) {
-    contador++;
-    nodop = nodop->seq_ptr;
-  }
-
-  return contador;
+	return cantidad;
 }
