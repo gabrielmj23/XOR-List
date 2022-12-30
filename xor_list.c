@@ -99,37 +99,45 @@ int insertar_final(lista_t *listp, int elem) {
 	return 1; // Inserción exitosa
 }
 
-/*
- * Inserta ordenado un nodo con valor elem
- */
-int insertar_orden(lista_t *listp, int elem) {
-    nodo_t *nuevo = nuevo_nodo(elem);
-    if (nuevo == NULL)
+int insertar_orden(lista_t *listp, int elem){
+	// Crear un nuevo nodo
+	nodo_t *nuevop = nuevo_nodo(elem);
+    if (nuevop == NULL)
     	return 0;
-    nodo_t *actual = listp->ini;
-    nodo_t *anterior = NULL;
-    while (actual != NULL && actual->valor < elem) {
-        anterior = actual;
-        actual = actual->seq_ptr;
-    }
-    if (anterior == NULL) {
-        // insertar al inicio
-        nuevo->seq_ptr = listp->ini;
-        listp->ini = nuevo;
-        if (listp->fin == NULL) {
-            listp->fin = nuevo;
-        }
-    } else if (actual == NULL) {
-        // insertar al final
-        anterior->seq_ptr = nuevo;
-        nuevo->seq_ptr = NULL;
-        listp->fin = nuevo;
-    } else {
-        // insertar en medio
-        nuevo->seq_ptr = actual;
-        anterior->seq_ptr = nuevo;
-    }
-    return 1; // inserción exitosa
+	// Si la lista está vacía, el nuevo nodo es el único en la lista
+	if (listp->ini == NULL){
+		listp->ini = nuevop;
+		listp->fin = nuevop;
+		nuevo_nodo->seq_ptr = NULL;
+		return 0; // Inserción exitosa
+	}
+	// Recorrer la lista para encontrar el lugar adecuado donde insertar el nuevo nodo
+	nodo_t *cur = listp->ini;
+	nodo_t *prev = NULL;
+	while (cur != NULL && cur->valor < elem){
+		nodo_t *temp = cur;
+		cur = NEXT(cur, prev);
+		prev = temp;
+	}
+	// Insertar el nuevo nodo en el lugar adecuado
+	if (prev == NULL){
+		// El nuevo nodo es el primero en la lista
+		nuevop->seq_ptr = listp->ini->seq_ptr;
+		listp->ini->seq_ptr = NODE_XOR(nuevop, listp->ini->seq_ptr);
+		listp->ini = nuevop;
+	}else if (cur == NULL){
+		// El nuevo nodo es el último en la lista
+		nuevop->seq_ptr = listp->fin->seq_ptr;
+		listp->fin->seq_ptr = NODE_XOR(listp->fin->seq_ptr, nuevop);
+		listp->fin = nuevop;
+	}else{
+		// El nuevo nodo se inserta entre prev y cur
+		nuevop->seq_ptr = NODE_XOR(prev, cur);
+		prev->seq_ptr = NODE_XOR(nuevop, prev->seq_ptr);
+		cur->seq_ptr = NODE_XOR(nuevop, cur->seq_ptr);
+	}
+
+	return 0; // Inserción exitosa
 }
 
 /*
