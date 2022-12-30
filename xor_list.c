@@ -57,20 +57,20 @@ int es_vacia(lista_t *listp) {
  * Inserta un nodo con valor elem al inicio
  */
 int insertar_principio(lista_t *listp, int elem) {
-  nodo_t *nuevo = nuevo_nodo(elem);
-  if (nuevo == NULL)
+  nodo_t *nuevop = nuevo_nodo(elem);
+  if (nuevop == NULL)
     return 0;
   // Insertar el nuevo nodo al principio de la lista
 	if (listp->ini == NULL) {
 		// La lista está vacía, el nuevo nodo es el único en la lista
-		listp->ini = nuevo_nodo;
-		listp->fin = nuevo_nodo;
-		nuevo_nodo->seq_ptr = NULL;
+		listp->ini = nuevop;
+		listp->fin = nuevop;
+		nuevop->seq_ptr = NULL;
 	} else {
 		// La lista no está vacía, el nuevo nodo es el primero en la lista
-		nuevo_nodo->seq_ptr = listp->ini;
-		listp->ini->seq_ptr = NODE_XOR(nuevo_nodo, listp->ini->seq_ptr);
-		listp->ini = nuevo_nodo;
+		nuevop->seq_ptr = listp->ini;
+		listp->ini->seq_ptr = NODE_XOR(nuevop, listp->ini->seq_ptr);
+		listp->ini = nuevop;
 	}
 
 	return 1; // Inserción exitosa
@@ -80,20 +80,20 @@ int insertar_principio(lista_t *listp, int elem) {
  * Inserta un nodo con valor elem al final
  */
 int insertar_final(lista_t *listp, int elem) {
-    nodo_t *nuevo = nuevo_nodo(elem);
-    if (nuevo == NULL)
+    nodo_t *nuevop = nuevo_nodo(elem);
+    if (nuevop == NULL)
     	return 0;
     // Insertar el nuevo nodo al final de la lista
 	if (listp->fin == NULL) {
 		// La lista está vacía, el nuevo nodo es el único en la lista
-		listp->ini = nuevo_nodo;
-		listp->fin = nuevo_nodo;
-		nuevo_nodo->seq_ptr = NULL;
+		listp->ini = nuevop;
+		listp->fin = nuevop;
+		nuevop->seq_ptr = NULL;
 	} else {
 		// La lista no está vacía, el nuevo nodo es el último en la lista
-		nuevo_nodo->seq_ptr = listp->fin;
-		listp->fin->seq_ptr = NODE_XOR(listp->fin->seq_ptr, nuevo_nodo);
-		listp->fin = nuevo_nodo;
+		nuevop->seq_ptr = listp->fin;
+		listp->fin->seq_ptr = NODE_XOR(listp->fin->seq_ptr, nuevop);
+		listp->fin = nuevop;
 	}
 
 	return 1; // Inserción exitosa
