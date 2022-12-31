@@ -99,6 +99,9 @@ int insertar_final(lista_t *listp, int elem) {
 	return 1; // Inserción exitosa
 }
 
+/*
+ * Inserta un nodo con valor elem, ordenado en la lista
+ */
 int insertar_orden(lista_t *listp, int elem){
 	// Crear un nuevo nodo
 	nodo_t *nuevop = nuevo_nodo(elem);
@@ -227,7 +230,7 @@ int buscar_elemento(lista_t *listp, int elem) {
 
 	nodo_t *np = listp->ini, *prev = NULL, *aux;
 	while (np) {
-		// Si hay coincidencia se devuelve la posicion
+		// Si hay coincidencia se devuelve verdadero
 		if (np->valor == elem)
 			return 1;
 		// Si no, se avanza
@@ -245,7 +248,7 @@ void listar_inicio_final(lista_t *listp) {
 	nodo_t *nodop = listp->ini, *prev = NULL, *aux;
 	printf("--> ");
 	while (nodop) {
-		printf("%i --> ", nodop->valor);
+		printf("%i <-> ", nodop->valor);
 		aux = nodop;
 		nodop = NEXT(nodop, prev);
 		prev = aux;
@@ -260,7 +263,7 @@ void listar_final_inicio(lista_t *listp) {
 	nodo_t *nodop = listp->fin, *nxt = NULL, *aux;
 	printf("NULL");
 	while (nodop) {
-		printf(" <-- %i", nodop->valor);
+		printf(" <-> %i", nodop->valor);
 		aux = nodop;
 		nodop = PREV(nodop, nxt);
 		nxt = aux;

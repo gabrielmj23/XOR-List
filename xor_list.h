@@ -28,7 +28,6 @@ lista_t;
 nodo_t *nuevo_nodo(int elem);
 lista_t *nueva_lista(void);
 void inicializar_lista(lista_t *listp);
-void elimina_lista(lista_t *listp);
 int es_vacia(lista_t *listp);
 
 /*
